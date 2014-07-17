@@ -219,8 +219,8 @@ class Post < ActiveRecord::Base
     def like!(user)
       user.posts.create!(
         type: 'pants.like',
-        referenced_guid: guid,
-        body: "I've liked a post, woohoo!")
+        referenced_guid: self.guid,
+        body: "I've liked a post: #{self.url}")
     end
   end
 
