@@ -101,6 +101,10 @@ class Post < ActiveRecord::Base
     presence: true,
     uniqueness: { scope: :domain }
 
+  validates :type,
+    presence: true,
+    inclusion: { in: %w(pants.post pants.like) }
+
   # Post#user links this post to its author. Note that it's perfectly possible to
   # have a post _without_ a user; eg. if the post has been pulled into your local
   # database, but the user, for some reason, has not. It's important that if you
