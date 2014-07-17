@@ -204,6 +204,12 @@ class User < ActiveRecord::Base
     end
   end
 
+  concerning :Likes do
+    def has_liked_guid?(guid)
+      posts.of_type('pants.like').where(referenced_guid: guid).any?
+    end
+  end
+
   class << self
     def [](url)
       host = URI.parse(url.with_http).host

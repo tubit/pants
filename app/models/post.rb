@@ -71,6 +71,17 @@ class Post < ActiveRecord::Base
     end
   end
 
+  validate(on: :create) do
+    if user.try(:hosted?)
+      if type == 'pants.like'
+        # User can only like a post once.
+        if user.has_liked_guid?(referenced_guid)
+          errors.add(:referenced_guid, "cannot be liked more than once by the same user")
+        end
+      end
+    end
+  end
+
   validate(on: :update) do
     if guid_changed?
       errors.add(:guid, "can not be changed.")
@@ -197,6 +208,15 @@ class Post < ActiveRecord::Base
 
     def ping_sources_with_times
       pings.group('source').order('time').pluck('DISTINCT source, min(created_at) AS time')
+    end
+  end
+
+  concerning :Likes do
+    def like!(user)
+      user.posts.create!(
+        type: 'pants.like',
+        referenced_guid: guid,
+        body: "I've liked a post, woohoo!")
     end
   end
 
