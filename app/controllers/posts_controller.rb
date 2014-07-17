@@ -35,9 +35,9 @@ class PostsController < ApplicationController
     @all = params[:all].present?
 
     @posts = if @all
-      Post.latest.tagged_with(@tags)
+      Post.of_type('pants.post').latest.tagged_with(@tags)
     else
-      @posts.latest.tagged_with(@tags)
+      @posts.of_type('pants.post').latest.tagged_with(@tags)
     end
 
     respond_with @posts
