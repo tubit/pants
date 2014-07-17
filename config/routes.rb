@@ -26,6 +26,9 @@ Rails.application.routes.draw do
   get 'tag/:tag' => 'posts#tagged', as: :tagged_posts
   get 'tag/all/:tag' => 'posts#tagged', as: :all_tagged_posts, all: 1
 
+  # Likes
+  post 'likes' => 'likes#create'
+
   # Daily archives
   get ':year/:month/:day' => 'posts#day', as: :day,
     constraints: { year: /\d+/, month: /\d+/, day: /\d+/ }
