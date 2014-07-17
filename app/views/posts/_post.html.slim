@@ -16,17 +16,7 @@
         li.post-referenced-url
           = link_to post.referenced_guid.without_http.truncate(35), post.referenced_guid.with_http, class: "u-in-reply-to"
 
-  // show referenced post if available
-  - if post.referenced_post.present? && (@post.blank? || @post == post)
-    .post-reference
-      .post-reference-body
-        == post.referenced_post.body_html
-
-  // show actual post
-  .post-title class="p-name"
-    = post.title
-  .post-body class="e-content"
-    == post.body_html
+  = render "posts/types/#{post.type}", post: post
 
   - unless hide_actions
     ul.post-actions

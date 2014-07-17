@@ -1,0 +1,11 @@
+// show referenced post if available
+- if post.referenced_post.present? && (@post.blank? || @post == post)
+  .post-reference
+    .post-reference-body
+      == post.referenced_post.body_html
+
+// show actual post
+.post-title class="p-name"
+  = post.title
+.post-body class="e-content"
+  == post.body_html
